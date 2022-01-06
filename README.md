@@ -1,6 +1,7 @@
 # sending-metrics-to-thanos-from-remote-cluster-
 
 # create private s3 bucket in aws and attach following policy
+```
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -24,8 +25,9 @@
     ]
 }
 ```
-```
+
 # create one values.yaml file place below content
+```
 objstoreConfig: |-
   type: s3
   config:
@@ -43,14 +45,16 @@ receive:
     hostname: thanos-receive.fvwcfhmltaiiqzzhmbns.apis.klusternetes.com 
 ```
 
-```
+
 # Install Thanos on server
+```
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm search repo bitnami
 helm install thanos bitnami/thanos -f values.yaml
 ```
-```
+
 # create ingress for thanos query 
+```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -71,14 +75,15 @@ spec:
         path: /
         pathType: Prefix
 ```
-```
+
 # Access thanos query using host name in the ingress file
+```
 thanos-query.your domain name
 ```
-```
+
 
 # Install Prometheus on another server
-
+```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install prometheus prometheus-community/prometheus -f values.yaml
