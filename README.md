@@ -78,7 +78,7 @@ thanos-query.your domain name
 ```
 
 # Install Prometheus on another server
-```
+
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install prometheus prometheus-community/prometheus -f values.yaml
