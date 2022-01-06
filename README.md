@@ -23,7 +23,8 @@
         }
     ]
 }
-
+```
+```
 # create one values.yaml file place below content
 objstoreConfig: |-
   type: s3
