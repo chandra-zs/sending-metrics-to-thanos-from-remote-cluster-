@@ -42,7 +42,7 @@ receive:
   enabled: true
   ingress:
     enabled: true
-    hostname: thanos-receive.fvwcfhmltaiiqzzhmbns.apis.klusternetes.com 
+    hostname: thanos-receive.mention your domain name
 ```
 
 
@@ -53,7 +53,7 @@ helm search repo bitnami
 helm install thanos bitnami/thanos -f values.yaml
 ```
 
-# create ingress for thanos query 
+# create ingress file ingress.yaml for thanos query and write ingress  
 ```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -71,22 +71,97 @@ spec:
           service:
             name: Mention thanos-query service name
             port:
-              number: 9090
+              number: Mention thanos-query service port no
         path: /
         pathType: Prefix
+```
+# Apply ingress 
+```
+kubectl apply -f ingress.yaml
 ```
 
 # Access thanos query using host name in the ingress file
 ```
 thanos-query.your domain name
 ```
+# create ingress file ingress.yaml for thanos receive and write ingress  
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: annotated
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: thanos-receive.your domain name
+    http:
+      paths:
+      - backend:
+          service:
+            name: Mention thanos-receive service name
+            port:
+              number: Mention thanos-receive service port no
+        path: /
+        pathType: Prefix
+```
+# Apply ingress 
+```
+kubectl apply -f thanos-receive-ingress.yaml
+```
 
-
+# Access thanos receive using host name in the ingress file
+```
+thanos-receive.your domain name
+```
+# Connect to prometheus server 
+```
+export KUBECONFIG=$(pwd)/kluster.yaml
+```
 # Install Prometheus on another server
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install prometheus prometheus-community/prometheus -f values.yaml
 ```
-
-
+# Add remoteWrite config to values.yaml under server section
+```
+remote_write:
+- url: http://Mention domain name of thanos receive created using ingress(hostname in ingress file)/api/v1/receive
+```
+# Add external_labels in values.yaml file under global section
+```
+external_labels:
+      cluster: bc1
+```
+# create ingress file ingress.yaml for thanos query and write ingress  
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: annotated
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: prometheus-server.your domain name
+    http:
+      paths:
+      - backend:
+          service:
+            name: Mention prometheus-server service name
+            port:
+              number: Mention prometheus-server service port no
+        path: /
+        pathType: Prefix
+```
+# Apply ingress 
+```
+kubectl apply -f ingress.yaml
+```
+# Access thanos query using host name in the ingress file
+```
+prometheus-server.your domain name
+```
