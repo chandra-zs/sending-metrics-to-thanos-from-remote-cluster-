@@ -123,7 +123,6 @@ export KUBECONFIG=$(pwd)/kluster.yaml
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install prometheus prometheus-community/prometheus -f values.yaml
 ```
 # Add remoteWrite config to values.yaml under server section
 ```
@@ -134,6 +133,10 @@ remote_write:
 ```
 external_labels:
       cluster: bc1
+```
+# Now install prometheus
+```
+helm install prometheus prometheus-community/prometheus -f values.yaml
 ```
 # create ingress file ingress.yaml for thanos query and write ingress  
 ```
