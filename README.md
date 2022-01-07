@@ -161,7 +161,8 @@ spec:
 ```
 kubectl apply -f ingress.yaml
 ```
-# Access thanos query using host name in the ingress file
+# Access prometheus using host name in the ingress file
 ```
 prometheus-server.your domain name
 ```
+# Now you will see kube metrics in thanos-query UI
