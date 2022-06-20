@@ -138,7 +138,7 @@ external_labels:
 ```
 helm install prometheus prometheus-community/prometheus -f values.yaml
 ```
-# create ingress file ingress.yaml for thanos query and write ingress  
+# create ingress file ingress.yaml for prometheus and write ingress  
 ```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
