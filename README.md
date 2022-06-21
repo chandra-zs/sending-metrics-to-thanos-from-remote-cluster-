@@ -169,3 +169,9 @@ kubectl apply -f ingress.yaml
 prometheus-server.your domain name
 ```
 # Now you will see kube metrics in thanos-query UI
+
+# If u want to deploy minio as storage instead of s3 bucket
+```
+https://github.com/itzg/try-thanos/blob/master/minio-deployment.yaml
+https://github.com/itzg/try-thanos.git
+```
